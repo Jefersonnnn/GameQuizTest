@@ -12,7 +12,7 @@
     <div v-if="questionStage">
       <question
       :question="questions[currentQuestion]"
-      v-on="handleAnswer"
+      v-on:answer="handleAnswer"
       :question-number="currentQuestion+1"
       ></question>
     </div>
@@ -49,12 +49,8 @@
       let vm = this;
       fb.quizCollection.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          //     this.title = res.title;
-              vm.questions = doc.data();
+              vm.questions = doc.data().questions;
               vm.introStage = true;
-
         });
       });
     },
@@ -62,8 +58,6 @@
       startQuiz() {
         this.introStage = false;
         this.questionStage = true;
-        //console.log('test' + JSON.stringify(this.questions[this.currentQuestion]));
-        console.log('test' + JSON.stringify(this.questions));
       },
       handleAnswer(e) {
         console.log('answer event ftw', e);

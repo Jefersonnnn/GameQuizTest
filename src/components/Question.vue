@@ -31,7 +31,7 @@
       }
     },
     created() {
-     console.log(this.question)
+   console.log("Questions: " + this.question)
     },
     methods:
       {
