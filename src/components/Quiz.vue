@@ -8,6 +8,9 @@
         <a class="btn-10" href="#" @click="startQuiz"><span>Iniciar Quiz</span></a>
       </div>
     </div>
+    <div class="topics" :key="topicsStage" v-if="topicsStage">
+      <topics v-on:stopic="handleTopic($event)"></topics>
+    </div>
     <div class="play" :key="questionStage" v-if="questionStage">
       <div>
         <div class="container hamilton--header--text">
@@ -39,18 +42,22 @@
 
 <script>
   import Question from './Question';
+  import Topics from "./Topics";
 
   const fb = require('../config/firebaseConfig.js');
 
   export default {
-    components: {Question},
+    components: {Topics, Question},
     name: "Quiz",
     data() {
       return {
         introStage: false,
         questionStage: false,
         resultsStage: false,
+        topicsStage: false,
+
         title: 'Game Quiz Test',
+
         questions: {},
         currentQuestion: 0,
         currentTopic: '',
@@ -61,23 +68,29 @@
       }
     },
     created() {
-      let vm = this;
-      fb.quizCollection.doc('requisitos_teste').get().then(function (doc) {
-        if (doc.exists) {
-          vm.currentTopic = 'requisitos_teste';
-          vm.questions = doc.data().questions;
-          vm.introStage = true;
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      }).catch(function(error) {
-        console.log("Error getting document:", error);
-      });
+      this.introStage = true;
+
+      this.topicsStage = false;
+      this.resultsStage = false;
+      this.questionStage = false;
     },
     methods: {
+      getNewQuestion() {
+      },
       startQuiz() {
         this.introStage = false;
+        this.questionStage = false;
+        this.topicsStage = true;
+      },
+      handleTopic(e) {
+        this.currentTopic = e.title;
+
+        this.questions = null;
+        this.questions = e.questions;
+
+        this.introStage = false;
+        this.topicsStage = false;
+        this.resultsStage = false;
         this.questionStage = true;
       },
       handleAnswer(e) {
@@ -112,7 +125,6 @@
     color: black;
   }
 
-
   [class^="btn-"] {
     position: relative;
     display: block;
@@ -129,6 +141,7 @@
     color: #376867;
     border: #52a3a2 solid 1px;
   }
+
   .btn-10:before, .btn-10:after,
   .btn-10 span:before,
   .btn-10 span:after {
@@ -141,23 +154,28 @@
     background-color: rgba(36, 107, 106, 0.25);
     transition: 0.4s;
   }
+
   .btn-10:after,
   .btn-10 span:before {
     left: auto;
     right: 0;
   }
+
   .btn-10 span:before,
   .btn-10 span:after {
     transition-delay: 0.4s;
   }
+
   .btn-10:hover {
     color: #ffffff;
   }
+
   .btn-10:hover:before, .btn-10:hover:after,
   .btn-10:hover span:before,
   .btn-10:hover span:after {
     width: 250px;
   }
+
   .btn-10:active {
     background-color: #5f6a8e;
   }
@@ -193,6 +211,7 @@
       height: 375px;
     }
   }
+
   @-webkit-keyframes criss-cross-right {
     0% {
       right: -20px;
@@ -208,6 +227,7 @@
       height: 375px;
     }
   }
+
   @keyframes criss-cross-right {
     0% {
       right: -20px;
@@ -223,7 +243,6 @@
       height: 375px;
     }
   }
-
 
   .home {
     display: flex;

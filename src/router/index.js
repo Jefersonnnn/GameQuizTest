@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Game from '@/components/Game'
 import CreateQuestion from '@/components/CreateQuestion'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -20,7 +20,7 @@ export default new Router({
       component: Game
     },
     {
-      path: '/new',
+      path: '/newTopic',
       name: 'NewQuestion',
       component: CreateQuestion
     }
