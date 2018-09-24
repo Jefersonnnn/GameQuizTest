@@ -38,6 +38,7 @@
     },
     created() {
       let vm = this;
+
       fb.quizCollection.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           vm.listTopics.push(doc.data());

@@ -6,6 +6,7 @@
         <p>Teste seus conhecimentos sobre a Matéria de Testes de Software: processo que faz parte do #desenvolvimento de
           software, e tem como principal objetivo revelar falhas/bugs.</p>
         <a class="btn-10" href="#" @click="startQuiz"><span>Iniciar Quiz</span></a>
+        <a class="btn-10" href="/newtopic"><span>Nova pergunta</span></a>
       </div>
     </div>
     <div class="topics" :key="topicsStage" v-if="topicsStage">

@@ -20,7 +20,7 @@ export default new Router({
       component: Game
     },
     {
-      path: '/newTopic',
+      path: '/newtopic',
       name: 'NewQuestion',
       component: CreateQuestion
     }
